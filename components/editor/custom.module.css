@@ -1,0 +1,24 @@
+.simplebar-placeholder {
+    display: none !important;
+}
+
+.text-editor .quill .ql-container .ql-tooltip {
+    left: -1.5px;
+    top: 30.4667px;
+}
+
+
+.Button {
+    display: flex;
+    margin-left: 94%;
+    align-items: center;
+    cursor: pointer;
+    width: 5vh;
+    justify-content: center;
+    border: none;
+    background-color: rgb(207, 188, 188);
+    margin-top: -7%;
+    height: 4vh;
+   
+
+}
