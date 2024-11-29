@@ -203,7 +203,6 @@ span.flatpickr-weekday,
   overflow-y: scroll;
   position: relative;
   border-radius: 15px;
-  
 }
 .modal article {
   display: flex;
@@ -225,4 +224,14 @@ span.flatpickr-weekday,
   right: 30px;
   font-size: 25px;
   font-weight: 600;
+}
+.ant-tooltip {
+  display: none;
+}
+.ant-upload-list-item-error {
+  border-color: #d9d9d9 !important;
+  color: #929292 !important;
+}
+.ant-upload-list-item-actions > a {
+  display: none;
 }

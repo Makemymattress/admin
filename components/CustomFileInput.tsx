@@ -63,17 +63,20 @@ const CustomFileInput = ({ setSelectedFileFromParent, filePreviewed }: any) => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center", // Center the background
         position: "relative",
-      }}>
+      }}
+    >
       <label
         style={{ zIndex: "10" }}
         htmlFor="fileInput"
-        className="flex h-10 w-10 mb-3 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+        className="flex h-10 w-10 mb-3 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark"
+      >
         <svg
           width="16"
           height="16"
           viewBox="0 0 16 16"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -95,6 +98,7 @@ const CustomFileInput = ({ setSelectedFileFromParent, filePreviewed }: any) => {
         </svg>
       </label>
       <input
+        multiple
         type="file"
         id="fileInput"
         style={{ display: "none" }}
@@ -108,7 +112,8 @@ const CustomFileInput = ({ setSelectedFileFromParent, filePreviewed }: any) => {
             textAlign: "center",
             zIndex: "1",
             color: "white",
-          }}>
+          }}
+        >
           <strong>File Name:</strong> {selectedFile.name}
         </div>
       ) : (
@@ -129,7 +134,8 @@ const CustomFileInput = ({ setSelectedFileFromParent, filePreviewed }: any) => {
           backgroundColor: "rgba(55, 55,0, 0.25)",
           position: "absolute",
           display: selectedFile ? "block" : "none",
-        }}></div>
+        }}
+      ></div>
     </div>
   );
 };

@@ -7,3 +7,20 @@ const Loader = () => {
 };
 
 export default Loader;
+export const uploadButton = (
+  <div
+    style={{
+      backgroundColor: "white",
+      height: "100%",
+      width: "100%",
+      borderRadius: "10px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+    }}
+  >
+    
+    <div>Upload</div>
+  </div>
+);
