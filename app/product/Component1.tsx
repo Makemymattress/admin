@@ -108,10 +108,6 @@ const Products = ({ id, setState, setId, state }: any) => {
 
   //thickness
   const [selectedThickness, setSelectedThickness] = useState<any>([]);
-  console.log(
-    "🚀 ~ file: Component1.tsx:111 ~ Products ~ selectedThickness:",
-    selectedThickness
-  );
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
   const [thicknessInputs, setThicknessInputs] = useState<any[]>([]);
   const [thinknessVal, setThinknessVal] = useState<any[]>([]);
@@ -146,6 +142,9 @@ const Products = ({ id, setState, setId, state }: any) => {
   };
   const [images, setImages] = useState<any>([]);
   const [imageLinks, setImageLinks] = useState([]);
+
+  const [thumbnail, setThumbnail] = useState<any>([]);
+  const [thumbnailLink, setThumbnailLink] = useState([]);
 
   const [videos, setVideos] = useState<any>([]);
   const [videoLinks, setVideoLinks] = useState([]);
@@ -194,6 +193,13 @@ const Products = ({ id, setState, setId, state }: any) => {
           });
           setImages(data);
           setImageLinks(setDefaultImages1(data));
+        }
+        if (findata.data?.data.thumbnail) {
+          const data = [setDefaultImages(findata.data?.data.thumbnail, 20)];
+          console.log("🚀 ~ file: Component1.tsx:199 ~ getOne ~ data:", data);
+
+          setThumbnail(data);
+          setThumbnailLink(setDefaultImages1(data));
         }
         if (findata.data?.data.videos?.length) {
           const data = findata.data?.data.videos.map((url: any, uid: any) => {
@@ -249,11 +255,7 @@ const Products = ({ id, setState, setId, state }: any) => {
       formData.append("queen", JSON.stringify(form.queen));
       formData.append("king", JSON.stringify(form.king));
       await compressAndAppendFiles(images, formData, "images");
-      console.log(
-        "🚀 ~ file: Component1.tsx:253 ~ videos.forEach ~ videos:",
-        videos,
-        images
-      );
+      await compressAndAppendFiles(thumbnail, formData, "thumbnail");
       videos.forEach(async (file: any) => {
         if (file.originFileObj) {
           formData.append("videos", file.originFileObj);
@@ -262,6 +264,10 @@ const Products = ({ id, setState, setId, state }: any) => {
       if (state === "edit") {
         formData.append("imagesLink", JSON.stringify(imageLinks));
         formData.append("videosLink", JSON.stringify(videoLinks));
+        formData.append(
+          "thumbnailLink",
+          thumbnailLink.length ? thumbnailLink[0] : ""
+        );
         formData.append("id", id);
         res = await axios.patch(`${PROXY}/product/update`, formData, {
           headers: {
@@ -288,10 +294,6 @@ const Products = ({ id, setState, setId, state }: any) => {
         setState(false);
       }
     } catch (error) {
-      console.log(
-        "🚀 ~ file: Component1.tsx:289 ~ handleSubmit ~ error:",
-        error
-      );
     } finally {
       setState(false);
     }
@@ -334,6 +336,22 @@ const Products = ({ id, setState, setId, state }: any) => {
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 ">
                   <label className="mb-1 block text-black dark:text-white">
+                    Thumbnail
+                  </label>
+                  <Upload
+                    accept="image/*"
+                    multiple
+                    listType="picture-card"
+                    fileList={thumbnail}
+                    onChange={(e: any) => {
+                      handleChangeMedia(e, setThumbnail, setThumbnailLink);
+                    }}
+                  >
+                    {thumbnail.length >= 1 ? null : uploadButton}
+                  </Upload>
+                </div>{" "}
+                <div className="mb-4.5 flex flex-col gap-6 ">
+                  <label className="mb-1 block text-black dark:text-white">
                     Images
                   </label>
                   <Upload
@@ -364,7 +382,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     {videos.length >= 10 ? null : uploadButton}
                   </Upload>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -396,7 +413,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 {/* Row 2 */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -429,7 +445,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 {/* Row 3 */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -462,7 +477,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 {/* Category */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -504,7 +518,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     </select>
                   </div>
                 </div>
-
                 {/* Popular and Exclusive */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -547,7 +560,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     </select>
                   </div>
                 </div>
-
                 {/* Customization */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -828,7 +840,6 @@ const Products = ({ id, setState, setId, state }: any) => {
 
                   {/* Input boxes for each selected option */}
                 </div>
-
                 {/* Repeat for all fields */}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
@@ -861,7 +872,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -893,7 +903,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -925,7 +934,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -960,7 +968,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -995,7 +1002,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -1015,7 +1021,6 @@ const Products = ({ id, setState, setId, state }: any) => {
                     />
                   </div>
                 </div>
-
                 <button
                   onClick={handleSubmit}
                   className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
