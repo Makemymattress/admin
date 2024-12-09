@@ -494,6 +494,7 @@ const Products = ({ id, setState, setId, state }: any) => {
                       <option value="Mattress">Mattress</option>
                       <option value="Pillows">Pillows</option>
                       <option value="Covers">Covers</option>
+                      <option value="Cushion">Cushion</option>
                     </select>
                   </div>
 
